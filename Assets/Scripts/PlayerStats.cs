@@ -187,6 +187,7 @@ public class PlayerStats : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.F))
                 {
                     other.GetComponent<Outline>().enabled = false;
+                    situationText.text = "Ya puedes abrir la puerta";
                 }
             }
         }
@@ -245,6 +246,7 @@ public class PlayerStats : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.F))
                 {
                     haveElectricity = true;
+                    crowbarImg.gameObject.SetActive(false);
                     foreach (var spark in sparks)
                     {
                         spark.SetActive(false);
