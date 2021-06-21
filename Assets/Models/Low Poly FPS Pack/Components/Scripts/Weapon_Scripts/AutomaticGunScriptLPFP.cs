@@ -273,6 +273,7 @@ public class AutomaticGunScriptLPFP : MonoBehaviour
 		//If out of ammo
 		if (currentAmmo == 0)
 		{
+			//Show out of ammo text
 			//Toggle bool
 			outOfAmmo = true;
 			//Auto reload if true
@@ -283,6 +284,7 @@ public class AutomaticGunScriptLPFP : MonoBehaviour
 		}
 		else
 		{
+			//When ammo is full, show weapon name again
 			//Toggle bool
 			outOfAmmo = false;
 			//anim.SetBool ("Out Of Ammo", false);

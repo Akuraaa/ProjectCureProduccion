@@ -30,7 +30,6 @@ public class CasingScript : MonoBehaviour {
 	[Header("Audio")]
 	public AudioClip[] casingSounds;
 	public AudioSource audioSource;
-
 	[Header("Spin Settings")]
 	//How fast the casing spins
 	[Tooltip("How fast the casing spins over time")]

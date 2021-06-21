@@ -5993,9 +5993,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.43715462
-  m_Height: 1.6871805
+  m_Height: 1.8443751
   m_Direction: 1
-  m_Center: {x: 0.030000031, y: -0.0050284863, z: 0.14486709}
+  m_Center: {x: 0.030000031, y: -0.08362579, z: 0.14486709}
 --- !u!114 &6243907155006968375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6016,6 +6016,7 @@ MonoBehaviour:
   _receiveDamage: {fileID: 8300000, guid: d59229f63a9ac8b4b91ba6cc157958b5, type: 3}
   _isDead: 0
   timeToDie: 0
+  invulnerabilityTime: 1
   waypoints:
   - {fileID: 359390307074068277}
   - {fileID: 359390308211163264}

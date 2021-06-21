@@ -37,8 +37,11 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private AudioClip pickUp;
     [SerializeField] private GameObject map;
 
+    [SerializeField] private GameObject pausePanel;
+
     private void Start()
     {
+        pausePanel.SetActive(false);
         oilCount = 0;
         oilCountText.text = oilCount + "/3";
         oilImg.gameObject.SetActive(false);
@@ -59,6 +62,20 @@ public class PlayerStats : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!pausePanel.activeInHierarchy)
+            {
+                
+                PauseGame();
+            }
+            else
+            {
+                ContinueGame();
+                
+            }
+        }
+
         bloodyScreen.color = alphaColor;
         if (hitPlayer)
         {
@@ -98,14 +115,41 @@ public class PlayerStats : MonoBehaviour
 
         if (haveElectricity)
         {
-            electricityBox.SetActive(false);
+            electricityBox.transform.GetChild(0).gameObject.SetActive(true);
+            Explosion();
+            foreach (var spark in sparks)
+            {
+                spark.SetActive(false);
+            }
         }
         else
         {
-            electricityBox.SetActive(true);
+            electricityBox.transform.GetChild(0).gameObject.SetActive(false);
         }
 
         oilCountText.text = oilCount + "/3";
+    }
+
+    private void PauseGame()
+    {
+        Time.timeScale = 0;
+        pausePanel.SetActive(true);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    private void ContinueGame()
+    {
+        Time.timeScale = 1;
+        pausePanel.SetActive(false);
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    IEnumerator Explosion()
+    {
+        yield return new WaitForSeconds(electricityBox.GetComponentInChildren<AudioSource>().clip.length);
+
     }
 
     public void SetHealthBar()
@@ -246,11 +290,7 @@ public class PlayerStats : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.F))
                 {
                     haveElectricity = true;
-                    crowbarImg.gameObject.SetActive(false);
-                    foreach (var spark in sparks)
-                    {
-                        spark.SetActive(false);
-                    }
+                    crowbarImg.gameObject.SetActive(false);          
                     situationText.gameObject.SetActive(false);
                     giantBoxCollider.SetActive(false);
 
