@@ -13807,7 +13807,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9eb462bb2f180d4598031d2d1171d3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSources: []
   musicVolume: 1
 --- !u!1 &3401190832418812296
 GameObject:
@@ -44162,7 +44161,7 @@ MonoBehaviour:
   maxHealth: 100
   curHealth: 0
   oilCount: 0
-  timeToFade: 2
+  timeToFade: 1
   hitPlayer: 0
   situationText: {fileID: 17312083883414571}
   haveCode: 0
@@ -44172,6 +44171,8 @@ MonoBehaviour:
   haveCrowbar: 0
   canGenerator: 0
   electricityBox: {fileID: 0}
+  explosion: {fileID: 5476478303512060185, guid: 33aed4253d07318478aa8fb28db8296c,
+    type: 3}
   sparks:
   - {fileID: 0}
   - {fileID: 0}
@@ -44199,6 +44200,7 @@ MonoBehaviour:
   - {fileID: 0}
   giantBoxCollider: {fileID: 0}
   pickUp: {fileID: 8300000, guid: 2e91044f2ff105d409aeb801610cd0cb, type: 3}
+  healthSound: {fileID: 8300000, guid: c57f8ef3984e28e40992c8afec2b5fcf, type: 3}
   map: {fileID: 1142294993259682973}
   pausePanel: {fileID: 3290842859540685332}
 --- !u!114 &8544902603792313270

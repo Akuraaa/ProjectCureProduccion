@@ -27,6 +27,7 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private TMP_Text situationText;
     [SerializeField] public bool haveCode, openDoor, haveMap, haveElectricity, haveCrowbar, canGenerator;
     public GameObject electricityBox;
+    public GameObject explosion;
     public GameObject[] sparks;
     public GameObject giantBoxCollider;
 
@@ -34,7 +35,7 @@ public class PlayerStats : MonoBehaviour
     //[SerializeField] private TMP_Text timeText;
     //[SerializeField] private Light[] spotLights;
     //[SerializeField] private Color normalColor, warningColor;
-    [SerializeField] private AudioClip pickUp;
+    [SerializeField] private AudioClip pickUp, healthSound;
     [SerializeField] private GameObject map;
 
     [SerializeField] private GameObject pausePanel;
@@ -115,8 +116,7 @@ public class PlayerStats : MonoBehaviour
 
         if (haveElectricity)
         {
-            electricityBox.transform.GetChild(0).gameObject.SetActive(true);
-            Explosion();
+            electricityBox.SetActive(false);
             foreach (var spark in sparks)
             {
                 spark.SetActive(false);
@@ -124,7 +124,7 @@ public class PlayerStats : MonoBehaviour
         }
         else
         {
-            electricityBox.transform.GetChild(0).gameObject.SetActive(false);
+            electricityBox.SetActive(true);
         }
 
         oilCountText.text = oilCount + "/3";
@@ -144,12 +144,6 @@ public class PlayerStats : MonoBehaviour
         pausePanel.SetActive(false);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-    }
-
-    IEnumerator Explosion()
-    {
-        yield return new WaitForSeconds(electricityBox.GetComponentInChildren<AudioSource>().clip.length);
-
     }
 
     public void SetHealthBar()
@@ -178,6 +172,14 @@ public class PlayerStats : MonoBehaviour
         {
             haveMap = true;
             GetComponent<AudioSource>().PlayOneShot(pickUp);
+            Destroy(other.gameObject);
+        }
+
+        if (other.gameObject.CompareTag("Healthpickup"))
+        {
+            GetComponent<AudioSource>().PlayOneShot(healthSound);
+            if (curHealth <= 100)
+                curHealth += 20;
             Destroy(other.gameObject);
         }
     }
@@ -227,7 +229,10 @@ public class PlayerStats : MonoBehaviour
             else if (oilCount == 3)
             {
                 situationText.gameObject.SetActive(true);
-                situationText.text = "Presiona F para activar el generador";
+                if (other.GetComponent<Outline>().isActiveAndEnabled)
+                {
+                    situationText.text = "Presiona F para activar el generador";
+                }
                 if (Input.GetKeyDown(KeyCode.F))
                 {
                     other.GetComponent<Outline>().enabled = false;
@@ -282,6 +287,7 @@ public class PlayerStats : MonoBehaviour
 
         if (other.gameObject.CompareTag("ElectricBox"))
         {
+            bool haveExplosion = false;
             if (haveCrowbar)
             {
                 situationText.gameObject.SetActive(true);
@@ -290,10 +296,16 @@ public class PlayerStats : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.F))
                 {
                     haveElectricity = true;
+                    
                     crowbarImg.gameObject.SetActive(false);          
                     situationText.gameObject.SetActive(false);
                     giantBoxCollider.SetActive(false);
-
+                    if (!haveExplosion)
+                    {
+                        haveExplosion = true;
+                        Instantiate(explosion, other.transform.position, other.transform.rotation);
+                        Destroy(explosion, 10f);
+                    }
                 }
             }
             else
