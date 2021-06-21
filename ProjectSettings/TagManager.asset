@@ -20,6 +20,7 @@ TagManager:
   - Crowbar
   - Oil
   - Generator
+  - Healthpickup
   layers:
   - Default
   - TransparentFX
