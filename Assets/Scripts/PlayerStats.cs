@@ -27,6 +27,7 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private TMP_Text situationText;
     [SerializeField] public bool haveCode, openDoor, haveMap, haveElectricity, haveCrowbar, canGenerator;
     public GameObject electricityBox;
+    public GameObject explosion;
     public GameObject[] sparks;
     public GameObject giantBoxCollider;
 
@@ -34,11 +35,14 @@ public class PlayerStats : MonoBehaviour
     //[SerializeField] private TMP_Text timeText;
     //[SerializeField] private Light[] spotLights;
     //[SerializeField] private Color normalColor, warningColor;
-    [SerializeField] private AudioClip pickUp;
+    [SerializeField] private AudioClip pickUp, healthSound;
     [SerializeField] private GameObject map;
+
+    [SerializeField] private GameObject pausePanel;
 
     private void Start()
     {
+        pausePanel.SetActive(false);
         oilCount = 0;
         oilCountText.text = oilCount + "/3";
         oilImg.gameObject.SetActive(false);
@@ -59,6 +63,20 @@ public class PlayerStats : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!pausePanel.activeInHierarchy)
+            {
+                
+                PauseGame();
+            }
+            else
+            {
+                ContinueGame();
+                
+            }
+        }
+
         bloodyScreen.color = alphaColor;
         if (hitPlayer)
         {
@@ -99,6 +117,10 @@ public class PlayerStats : MonoBehaviour
         if (haveElectricity)
         {
             electricityBox.SetActive(false);
+            foreach (var spark in sparks)
+            {
+                spark.SetActive(false);
+            }
         }
         else
         {
@@ -106,6 +128,22 @@ public class PlayerStats : MonoBehaviour
         }
 
         oilCountText.text = oilCount + "/3";
+    }
+
+    private void PauseGame()
+    {
+        Time.timeScale = 0;
+        pausePanel.SetActive(true);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    private void ContinueGame()
+    {
+        Time.timeScale = 1;
+        pausePanel.SetActive(false);
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void SetHealthBar()
@@ -134,6 +172,14 @@ public class PlayerStats : MonoBehaviour
         {
             haveMap = true;
             GetComponent<AudioSource>().PlayOneShot(pickUp);
+            Destroy(other.gameObject);
+        }
+
+        if (other.gameObject.CompareTag("Healthpickup"))
+        {
+            GetComponent<AudioSource>().PlayOneShot(healthSound);
+            if (curHealth <= 100)
+                curHealth += 20;
             Destroy(other.gameObject);
         }
     }
@@ -183,7 +229,10 @@ public class PlayerStats : MonoBehaviour
             else if (oilCount == 3)
             {
                 situationText.gameObject.SetActive(true);
-                situationText.text = "Presiona F para activar el generador";
+                if (other.GetComponent<Outline>().isActiveAndEnabled)
+                {
+                    situationText.text = "Presiona F para activar el generador";
+                }
                 if (Input.GetKeyDown(KeyCode.F))
                 {
                     other.GetComponent<Outline>().enabled = false;
@@ -238,6 +287,7 @@ public class PlayerStats : MonoBehaviour
 
         if (other.gameObject.CompareTag("ElectricBox"))
         {
+            bool haveExplosion = false;
             if (haveCrowbar)
             {
                 situationText.gameObject.SetActive(true);
@@ -246,14 +296,16 @@ public class PlayerStats : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.F))
                 {
                     haveElectricity = true;
-                    crowbarImg.gameObject.SetActive(false);
-                    foreach (var spark in sparks)
-                    {
-                        spark.SetActive(false);
-                    }
+                    
+                    crowbarImg.gameObject.SetActive(false);          
                     situationText.gameObject.SetActive(false);
                     giantBoxCollider.SetActive(false);
-
+                    if (!haveExplosion)
+                    {
+                        haveExplosion = true;
+                        Instantiate(explosion, other.transform.position, other.transform.rotation);
+                        Destroy(explosion, 10f);
+                    }
                 }
             }
             else

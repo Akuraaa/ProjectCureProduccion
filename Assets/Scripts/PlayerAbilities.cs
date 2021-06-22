@@ -27,32 +27,33 @@ public class PlayerAbilities : MonoBehaviour
     private bool fward, bward, left, right;
     [SerializeField] private ParticleSystem forwardDash, backwardDash, leftDash, rightDash, updraftParticle;
 
-   [Header("Invisibility")]
-   public bool isInvisibility;
-   public float invisibilityTime;
-   public float invisibilityCooldown;
-   private float _invisibilityTime;
-   [SerializeField] private AudioClip invisibilitySound;
-   [SerializeField] private Image invisiblityUI;
-   [SerializeField] private Image cloakFeedback;
-   private Color alphaColor;
-   private Color abilitieNotReadyColor;
-   private Color abilitieReadyColor;
-   private AudioSource _audio;
+    [Header("Invisibility")]
+    public bool isInvisibility;
+    public float invisibilityTime;
+    public float invisibilityCooldown;
+    private float _invisibilityTime;
+    [SerializeField] private AudioClip invisibilitySound;
+    [SerializeField] private Image invisiblityUI;
+    [SerializeField] private Image cloakFeedback;
+    private Color alphaColor;
+    private Color abilitieNotReadyColor;
+    private Color abilitieReadyColor;
+    private AudioSource _audio;
 
-
+    private RigidbodyConstraints _originalConstrain = RigidbodyConstraints.FreezeRotation;
+    private RigidbodyConstraints lockedY = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
+    
     private void Awake()
     {
         alphaColor = cloakFeedback.color;
         alphaColor.a = 0;
-        cloakFeedback.color = alphaColor;
-        
+        cloakFeedback.color = alphaColor;  
         _invisibilityTime = invisibilityTime;
-        
         _audio = GetComponent<AudioSource>();
         player = GetComponent<FPSController>();
         abilitieNotReadyColor = new Color(.3f, .009f, .15f, .5f);
         abilitieReadyColor = new Color(1, 1, 1, 1);
+
     }
 
     void Update()
@@ -69,7 +70,6 @@ public class PlayerAbilities : MonoBehaviour
             _audio.PlayOneShot(updraftSound);
             updraftParticle.Play();
             player.GetComponent<Rigidbody>().AddForce(Vector3.up * updraftForce, ForceMode.Impulse);
-            //player._velocity.y = Mathf.Sqrt(updraftForce * -2f * player._gravity);
             isUpdrafting = true;
             updraftUI.fillAmount = 0;
             updraftUI.color = abilitieNotReadyColor;
@@ -190,7 +190,7 @@ public class PlayerAbilities : MonoBehaviour
 
             _audio.PlayOneShot(dashSound);
             StartCoroutine(DashCoroutine());
-            isDash = true;
+            isDash = true;          
             dashUI.fillAmount = 0;
             dashUI.color = abilitieNotReadyColor;
         }
@@ -212,9 +212,11 @@ public class PlayerAbilities : MonoBehaviour
 
         while (Time.time < startTime + dashDuration)
         {
+            GetComponent<Rigidbody>().constraints = lockedY;
             player.GetComponent<Rigidbody>().AddForce(dashVector * dashForce, ForceMode.Impulse);  
             //player._controller.Move(dashVector * dashForce * Time.deltaTime);
             yield return null;
+            GetComponent<Rigidbody>().constraints = _originalConstrain;
         }
     }
 

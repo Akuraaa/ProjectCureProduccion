@@ -11,7 +11,7 @@ public class ImpactScript : MonoBehaviour {
 	public AudioClip[] impactSounds;
 	public AudioSource audioSource;
 
-	private void Start () {
+    private void Start () {
 		// Start the despawn timer
 		StartCoroutine (DespawnTimer ());
 
@@ -21,8 +21,8 @@ public class ImpactScript : MonoBehaviour {
 		//Play the random impact sound
 		audioSource.Play();
 	}
-	
-	private IEnumerator DespawnTimer() {
+
+    private IEnumerator DespawnTimer() {
 		//Wait for set amount of time
 		yield return new WaitForSeconds (despawnTimer);
 		//Destroy the impact gameobject

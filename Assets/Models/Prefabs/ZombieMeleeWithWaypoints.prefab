@@ -7016,8 +7016,8 @@ GameObject:
   - component: {fileID: 8234600870331732771}
   - component: {fileID: 8234600870331732770}
   - component: {fileID: 8234600870331732773}
-  - component: {fileID: 8705838856551901153}
   - component: {fileID: 4777129196732876219}
+  - component: {fileID: 4950606537770738667}
   m_Layer: 9
   m_Name: Zombie
   m_TagString: Enemy
@@ -7032,7 +7032,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8234600870331732772}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -7229,19 +7229,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!65 &8705838856551901153
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8234600870331732772}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.48376834, y: 0.5045562, z: 0.32785964}
-  m_Center: {x: -0.039843388, y: 0.24772191, z: 0.04157567}
 --- !u!136 &4777129196732876219
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -7253,9 +7240,22 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.19913884
-  m_Height: 1.5717038
+  m_Height: 1.7340136
   m_Direction: 1
-  m_Center: {x: 0.03684017, y: 0.94897443, z: 0.07368024}
+  m_Center: {x: 0.03684017, y: 0.86781955, z: 0.07368024}
+--- !u!65 &4950606537770738667
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8234600870331732772}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.25542665, z: 0.39927942}
+  m_Center: {x: 0, y: 0.12873888, z: 0.0731411}
 --- !u!1 &8364175602026643534
 GameObject:
   m_ObjectHideFlags: 0

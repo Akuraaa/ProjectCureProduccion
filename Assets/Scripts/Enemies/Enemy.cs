@@ -46,7 +46,6 @@ public class Enemy : Target
 
 	private void Update()
 	{
-		Debug.Log(health);
 		//target = new Vector3 (player.position.x,transform.position.y, player.position.z);
 		if (!_isDead)
 		{

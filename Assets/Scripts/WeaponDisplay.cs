@@ -20,6 +20,8 @@ public class WeaponDisplay : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1) && ak.gameObject.activeInHierarchy == false)
         {
             isAK = true;
+            ak.transform.position = handGun.transform.position;
+            ak.transform.rotation = handGun.transform.rotation;
             ak.gameObject.SetActive(true);
             GetComponent<FPSController>().arms = ak;
             StartCoroutine(changeWeapon());
@@ -29,6 +31,8 @@ public class WeaponDisplay : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha2) && handGun.gameObject.activeInHierarchy == false)
         {
             isAK = false;
+            handGun.transform.position = ak.transform.position;
+            handGun.transform.rotation = ak.transform.rotation;
             handGun.gameObject.SetActive(true);
             GetComponent<FPSController>().arms = handGun;
             StartCoroutine(changeWeapon());
