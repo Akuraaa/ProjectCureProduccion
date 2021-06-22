@@ -7,17 +7,17 @@ using TMPro;
 
 public class Menu : MonoBehaviour
 {
-    public GameObject start;
-    public GameObject controls;
-    public GameObject credits;
-    public GameObject exit;
-    public TMP_Text Control;
-    public TMP_Text Credit;
+    public GameObject startButton;
+    public GameObject controlButton;
+    public GameObject creditButton;
+    public GameObject exitButton;
+    public GameObject controlPanel;
+    public GameObject creditPanel;
 
     void Start()
     {
-        Control.enabled = false;
-        Credit.enabled = false;
+        controlPanel.SetActive(false);
+        creditPanel.SetActive(false);
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
     }
@@ -36,13 +36,13 @@ public class Menu : MonoBehaviour
     }
 
     public void Controls()
-    {
-        Control.enabled = !Control.enabled;
+    {  
+        controlPanel.SetActive(!controlPanel.activeSelf);
     }
 
     public void Credits()
     {
-        Credit.enabled = !Credit.enabled;
+        creditPanel.SetActive(!creditPanel.activeSelf);
     }
 
     public void Exit()

@@ -178,8 +178,12 @@ public class PlayerStats : MonoBehaviour
         if (other.gameObject.CompareTag("Healthpickup"))
         {
             GetComponent<AudioSource>().PlayOneShot(healthSound);
-            if (curHealth <= 100)
+            if (curHealth > 100)
+            {
                 curHealth += 20;
+                if (curHealth > 100)
+                    curHealth = 100;
+            }
             Destroy(other.gameObject);
         }
     }
