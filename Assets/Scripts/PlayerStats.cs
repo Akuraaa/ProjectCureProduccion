@@ -30,15 +30,16 @@ public class PlayerStats : MonoBehaviour
     public GameObject explosion;
     public GameObject[] sparks;
     public GameObject giantBoxCollider;
+    public GameObject finalDoor;
 
-
-    //[SerializeField] private TMP_Text timeText;
-    //[SerializeField] private Light[] spotLights;
-    //[SerializeField] private Color normalColor, warningColor;
+    [SerializeField] private TMP_Text timeText;
+    [SerializeField] private Light[] spotLights;
+    [SerializeField] private Color normalColor, warningColor;
     [SerializeField] private AudioClip pickUp, healthSound;
     [SerializeField] private GameObject map;
-
     [SerializeField] private GameObject pausePanel;
+
+    public AudioClip doorSound;
 
     private void Start()
     {
@@ -55,10 +56,10 @@ public class PlayerStats : MonoBehaviour
         SetHealthBar();
         situationText.gameObject.SetActive(false);
         //timeText.gameObject.SetActive(false);
-        //for (int i = 0; i < spotLights.Length; i++)
-        //{
-        //    spotLights[i].color = normalColor;
-        //}
+        for (int i = 0; i < spotLights.Length; i++)
+        {
+            spotLights[i].color = normalColor;
+        }
     }
 
     private void Update()
@@ -128,6 +129,8 @@ public class PlayerStats : MonoBehaviour
         }
 
         oilCountText.text = oilCount + "/3";
+
+        finalDoor.GetComponent<Animator>().SetInteger("OilCount", oilCount);    
     }
 
     private void PauseGame()
@@ -258,6 +261,7 @@ public class PlayerStats : MonoBehaviour
                 {
                     oilCount += 1;
                     GetComponent<AudioSource>().PlayOneShot(pickUp);
+                    finalDoor.GetComponent<AudioSource>().PlayOneShot(doorSound);
                     Destroy(other.gameObject);
                     situationText.gameObject.SetActive(false);
                 }
