@@ -17,6 +17,9 @@ public class PlayerStats : MonoBehaviour
     public float maxHealth = 100;
     public float curHealth = 0;
     public int oilCount = 0;
+    private bool _lockedGen = false;
+    private bool lockDoor = false;
+    public int genCount = 0;
 
     public float timeToFade = 2;
     public bool hitPlayer = false;
@@ -39,10 +42,11 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private GameObject map;
     [SerializeField] private GameObject pausePanel;
 
-    public AudioClip doorSound;
+    public AudioClip doorSound, genSound;
 
     private void Start()
     {
+        _lockedGen = false;
         pausePanel.SetActive(false);
         oilCount = 0;
         oilCountText.text = oilCount + "/3";
@@ -129,8 +133,8 @@ public class PlayerStats : MonoBehaviour
         }
 
         oilCountText.text = oilCount + "/3";
+    
 
-        finalDoor.GetComponent<Animator>().SetInteger("OilCount", oilCount);    
     }
 
     private void PauseGame()
@@ -195,6 +199,7 @@ public class PlayerStats : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Door"))
         {
+            _lockedGen = false;
             if (oilCount == 3)
             {
                 situationText.gameObject.SetActive(true);
@@ -221,36 +226,76 @@ public class PlayerStats : MonoBehaviour
 
         if (other.gameObject.CompareTag("Generator"))
         {
-            oilImg.gameObject.SetActive(true);
-            if (oilCount == 0)
+            _lockedGen = true;
+            if (_lockedGen)
             {
-                situationText.gameObject.SetActive(true);
-                oilImg.gameObject.SetActive(true);
-                situationText.text = "Necesitas combustible";
+                genCount = oilCount;
             }
-            else if (oilCount > 0 && oilCount < 3)
+
+            switch (genCount)
             {
-                situationText.gameObject.SetActive(true);
-                situationText.text = "Necesitas mas combustible";
-            }
-            else if (oilCount == 3)
-            {
-                situationText.gameObject.SetActive(true);
-                if (other.GetComponent<Outline>().isActiveAndEnabled)
-                {
-                    situationText.text = "Presiona F para activar el generador";
-                }
-                if (Input.GetKeyDown(KeyCode.F))
-                {
-                    other.GetComponent<Outline>().enabled = false;
-                    situationText.text = "Ya puedes abrir la puerta";
-                }
+                case 0:
+                     oilImg.gameObject.SetActive(true);
+                     situationText.gameObject.SetActive(true);
+                     situationText.text = "Necesitas combustible";
+                    if (Input.GetKeyDown(KeyCode.F) & !lockDoor)
+                    {
+                        finalDoor.GetComponent<Animator>().SetInteger("OilCount", 0);
+                        lockDoor = true;
+                       
+                    }
+                    break;
+                case 1:
+                        situationText.gameObject.SetActive(true);
+                        situationText.text = "Necesitas mas combustible";
+                    if (Input.GetKeyDown(KeyCode.F) & !lockDoor)
+                    {
+                        finalDoor.GetComponent<Animator>().SetInteger("OilCount", 1);
+                        finalDoor.GetComponent<AudioSource>().PlayOneShot(doorSound);
+                        lockDoor = true;
+                        other.gameObject.GetComponent<AudioSource>().enabled = true;
+                        if (finalDoor.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
+                        {
+                            other.gameObject.GetComponent<AudioSource>().Stop();
+                        }
+                    }
+                    break;
+                case 2:
+                        situationText.gameObject.SetActive(true);
+                        situationText.text = "Necesitas mas combustible";
+                    if (Input.GetKeyDown(KeyCode.F) & !lockDoor)
+                    {
+                        finalDoor.GetComponent<Animator>().SetInteger("OilCount", 2);
+                        finalDoor.GetComponent<AudioSource>().PlayOneShot(doorSound);
+                        lockDoor = true;
+                        other.gameObject.GetComponent<AudioSource>().Play();
+                        if (finalDoor.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
+                        {
+                            other.gameObject.GetComponent<AudioSource>().Pause();
+                        }
+                    }
+                    break;
+                case 3:
+                    if (Input.GetKeyDown(KeyCode.F) & !lockDoor)
+                    {
+                        other.GetComponent<Outline>().enabled = false;
+                        finalDoor.GetComponent<Animator>().SetInteger("OilCount", 3);
+                        finalDoor.GetComponent<AudioSource>().PlayOneShot(doorSound);
+                        lockDoor = true;
+                        other.gameObject.GetComponent<AudioSource>().Play();
+                        if (finalDoor.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
+                        {
+                            other.gameObject.GetComponent<AudioSource>().Pause();
+                        }
+                    }
+                    break;
             }
         }
 
-
         if (other.gameObject.CompareTag("Oil"))
         {
+            _lockedGen = false;
+            lockDoor = false;
             oilImg.gameObject.SetActive(true);
             if (oilCount < 3)
             {
@@ -261,7 +306,6 @@ public class PlayerStats : MonoBehaviour
                 {
                     oilCount += 1;
                     GetComponent<AudioSource>().PlayOneShot(pickUp);
-                    finalDoor.GetComponent<AudioSource>().PlayOneShot(doorSound);
                     Destroy(other.gameObject);
                     situationText.gameObject.SetActive(false);
                 }
@@ -270,6 +314,7 @@ public class PlayerStats : MonoBehaviour
 
         if (other.gameObject.CompareTag("Electricity"))
         {
+            _lockedGen = false;
             if (haveElectricity)
             {
                 situationText.gameObject.SetActive(false);         
@@ -281,9 +326,9 @@ public class PlayerStats : MonoBehaviour
             }
         }
 
-
         if (other.gameObject.CompareTag("Crowbar"))
         {
+            _lockedGen = false;
             if (!haveCrowbar)
             {
                 haveCrowbar = true;
@@ -295,6 +340,7 @@ public class PlayerStats : MonoBehaviour
 
         if (other.gameObject.CompareTag("ElectricBox"))
         {
+            _lockedGen = false;
             bool haveExplosion = false;
             if (haveCrowbar)
             {
@@ -329,27 +375,33 @@ public class PlayerStats : MonoBehaviour
     {
        if (other.gameObject.CompareTag("Door"))
        {
-           situationText.gameObject.SetActive(false);
+            _lockedGen = false;
+            situationText.gameObject.SetActive(false);
        }
        if (other.gameObject.CompareTag("Crowbar"))
        {
-           situationText.gameObject.SetActive(false);
+            _lockedGen = false;
+            situationText.gameObject.SetActive(false);
        }
        if (other.gameObject.CompareTag("Electricity"))
        {
-           situationText.gameObject.SetActive(false);
+            _lockedGen = false;
+            situationText.gameObject.SetActive(false);
        }
        if (other.gameObject.CompareTag("ElectricBox"))
        {
-           situationText.gameObject.SetActive(false);
+            _lockedGen = false;
+            situationText.gameObject.SetActive(false);
        }
        if (other.gameObject.CompareTag("Generator"))
        {
-           situationText.gameObject.SetActive(false);
+            _lockedGen = false;
+            situationText.gameObject.SetActive(false);
        }
        if (other.gameObject.CompareTag("Oil"))
        {
-           situationText.gameObject.SetActive(false);
+            _lockedGen = false;
+            situationText.gameObject.SetActive(false);
        }
     }
 

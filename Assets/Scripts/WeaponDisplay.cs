@@ -11,8 +11,8 @@ public class WeaponDisplay : MonoBehaviour
 
     private void Start()
     {
-        isAK = true;
-        GetComponent<FPSController>().arms = ak;
+        //isAK = true;
+        GetComponent<FPSController>().arms = handGun;
     }
 
     private void Update()
