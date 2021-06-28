@@ -185,7 +185,7 @@ public class PlayerStats : MonoBehaviour
         if (other.gameObject.CompareTag("Healthpickup"))
         {
             GetComponent<AudioSource>().PlayOneShot(healthSound);
-            if (curHealth > 100)
+            if (curHealth < 100)
             {
                 curHealth += 20;
                 if (curHealth > 100)
@@ -193,10 +193,25 @@ public class PlayerStats : MonoBehaviour
             }
             Destroy(other.gameObject);
         }
+
+
+        
     }
 
     private void OnTriggerStay(Collider other)
     {
+        if (other.gameObject.CompareTag("AK47"))
+        {
+            situationText.text = "Presiona F para agarrar AK47";
+            situationText.gameObject.SetActive(true);
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                situationText.gameObject.SetActive(false);
+                GetComponent<WeaponDisplay>().haveAK = true;
+                Destroy(other.gameObject);
+            }
+        }
+
         if (other.gameObject.CompareTag("Door"))
         {
             _lockedGen = false;
@@ -377,6 +392,11 @@ public class PlayerStats : MonoBehaviour
        {
             _lockedGen = false;
             situationText.gameObject.SetActive(false);
+       }
+       if (other.gameObject.CompareTag("AK47"))
+       {
+           _lockedGen = false;
+           situationText.gameObject.SetActive(false);
        }
        if (other.gameObject.CompareTag("Crowbar"))
        {

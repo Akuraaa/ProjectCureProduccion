@@ -6,26 +6,30 @@ using UnityEngine.UI;
 public class WeaponDisplay : MonoBehaviour
 {
     public Transform ak, handGun;
-    public bool isAK;
+    public bool isAK, haveAK;
     [SerializeField] private Image primaryWeapon, secondaryWeapon;
 
     private void Start()
     {
-        //isAK = true;
+        isAK = false;
         GetComponent<FPSController>().arms = handGun;
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1) && ak.gameObject.activeInHierarchy == false)
+        if (haveAK)
         {
-            isAK = true;
-            ak.transform.position = handGun.transform.position;
-            ak.transform.rotation = handGun.transform.rotation;
-            ak.gameObject.SetActive(true);
-            GetComponent<FPSController>().arms = ak;
-            StartCoroutine(changeWeapon());
-            handGun.gameObject.SetActive(false);
+            if (Input.GetKeyDown(KeyCode.Alpha1) && ak.gameObject.activeInHierarchy == false)
+            {
+                isAK = true;
+                ak.transform.position = handGun.transform.position;
+                ak.transform.rotation = handGun.transform.rotation;
+                ak.gameObject.SetActive(true);
+                GetComponent<FPSController>().arms = ak;
+                StartCoroutine(changeWeapon());
+                handGun.gameObject.SetActive(false);
+            }
+
         }
         
         if (Input.GetKeyDown(KeyCode.Alpha2) && handGun.gameObject.activeInHierarchy == false)
@@ -45,7 +49,6 @@ public class WeaponDisplay : MonoBehaviour
             primaryWeapon.gameObject.SetActive(true);
             secondaryWeapon.gameObject.SetActive(false);
         }
-
         else
         {
             secondaryWeapon.gameObject.SetActive(true);
