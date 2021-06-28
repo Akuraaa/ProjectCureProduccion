@@ -21,6 +21,7 @@ TagManager:
   - Oil
   - Generator
   - Healthpickup
+  - AK47
   layers:
   - Default
   - TransparentFX
