@@ -14992,7 +14992,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 35.35
+  m_fontSize: 35.4
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -15148,7 +15148,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 35.35
+  m_fontSize: 35.4
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -15506,7 +15506,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 23.65
+  m_fontSize: 23.75
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -15938,7 +15938,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 0
+  m_firstOverflowCharacterIndex: -1
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -31649,7 +31649,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 0
+  m_firstOverflowCharacterIndex: -1
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -44126,8 +44126,8 @@ MonoBehaviour:
   walkingSpeed: 5
   runningSpeed: 9
   movementSmoothness: 0.125
-  jumpForce: 5
-  mouseSensitivity: 3
+  jumpForce: 3
+  mouseSensitivity: 1
   rotationSmoothness: 0.05
   minVerticalAngle: -90
   maxVerticalAngle: 90
@@ -44224,7 +44224,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isUpdrafting: 0
-  updraftForce: 10
+  updraftForce: 6
   updraftCooldown: 10
   updraftSound: {fileID: 8300000, guid: e3c2da43c3416694095a554c3b596984, type: 3}
   updraftUI: {fileID: 8543689057404420658}
@@ -44260,6 +44260,7 @@ MonoBehaviour:
   ak: {fileID: 8547341753389019013}
   handGun: {fileID: 1726583373223966566}
   isAK: 0
+  haveAK: 0
   primaryWeapon: {fileID: 8543689055663817179}
   secondaryWeapon: {fileID: 8543689056975850444}
 --- !u!1 &8544912141389956619
