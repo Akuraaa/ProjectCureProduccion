@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ZombieState : State
+public abstract class ZombieState : State
 {
-    protected ZombieBase zombie;
-
-    public ZombieState(StateMachine sm, ZombieBase z) : base (sm)
+    protected ZombieIA _zombie;
+    public ZombieState(StateMachine sm, ZombieIA zombie) : base(sm)
     {
-        zombie = z;
+        _zombie = zombie;
     }
 }

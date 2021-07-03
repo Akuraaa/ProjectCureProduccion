@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.00022888184}
+  m_AnchoredPosition: {x: 0, y: -0.00024414062}
   m_SizeDelta: {x: 0.7, y: -0.0005188}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1142294993259682973
@@ -76,7 +76,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -3.7599792, y: -4}
+  m_AnchoredPosition: {x: -3.7600098, y: -4}
   m_SizeDelta: {x: 471.51, y: 366}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5468825895721338488
@@ -413,7 +413,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.00022888184}
+  m_AnchoredPosition: {x: 0, y: -0.00024414062}
   m_SizeDelta: {x: 0.7, y: -0.0005188}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1720384738738161856
@@ -13660,7 +13660,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -8.200012, y: -1.7341003}
+  m_AnchoredPosition: {x: -8.200012, y: -1.7340698}
   m_SizeDelta: {x: -309.3, y: -116.130005}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8522377607177769113
@@ -14992,7 +14992,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 35.4
+  m_fontSize: 35.7
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -15148,7 +15148,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 35.4
+  m_fontSize: 35.7
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -15506,7 +15506,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 23.75
+  m_fontSize: 24.05
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -16276,7 +16276,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -36897,7 +36897,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 6.5298767, y: -0.099990845}
+  m_AnchoredPosition: {x: 6.5298767, y: -0.099975586}
   m_SizeDelta: {x: -29.880005, y: -8.290009}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8543689057373820710
@@ -43963,7 +43963,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8547823279739831575
 Transform:
   m_ObjectHideFlags: 0
@@ -44122,7 +44122,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   arms: {fileID: 1726583373223966566}
   armPosition: {x: 0, y: 0, z: 0}
-  stepSound: {fileID: 8300000, guid: 6f77228d88bbaa444bbe3a1f354001ab, type: 3}
+  walkingSound: {fileID: 0}
+  runningSound: {fileID: 0}
   walkingSpeed: 5
   runningSpeed: 9
   movementSmoothness: 0.125
@@ -44131,7 +44132,6 @@ MonoBehaviour:
   rotationSmoothness: 0.05
   minVerticalAngle: -90
   maxVerticalAngle: 90
-  footStepCooldown: 0.25
   input:
     rotateX: Mouse X
     rotateY: Mouse Y
@@ -44152,19 +44152,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ccaf48f9b47f5a4388e75776006deff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBar: {fileID: 8543689057082694834}
-  bloodyScreen: {fileID: 8543689055707282049}
-  crowbarImg: {fileID: 1289850613281054499}
-  oilImg: {fileID: 7233301185639169064}
-  healthText: {fileID: 8543689056921991033}
-  oilCountText: {fileID: 4221609400516813526}
   maxHealth: 100
   curHealth: 0
   oilCount: 0
   genCount: 0
-  timeToFade: 1
+  grenadeCount: 0
   hitPlayer: 0
-  situationText: {fileID: 17312083883414571}
+  haveGrenade: 0
   haveCode: 0
   openDoor: 0
   haveMap: 0
@@ -44201,16 +44195,12 @@ MonoBehaviour:
   - {fileID: 0}
   giantBoxCollider: {fileID: 0}
   finalDoor: {fileID: 0}
-  timeText: {fileID: 0}
-  spotLights: []
   normalColor: {r: 0, g: 0, b: 0, a: 0}
   warningColor: {r: 0, g: 0, b: 0, a: 0}
   pickUp: {fileID: 8300000, guid: 2e91044f2ff105d409aeb801610cd0cb, type: 3}
   healthSound: {fileID: 8300000, guid: c57f8ef3984e28e40992c8afec2b5fcf, type: 3}
-  map: {fileID: 1142294993259682973}
-  pausePanel: {fileID: 3290842859540685332}
-  doorSound: {fileID: 0}
-  genSound: {fileID: 0}
+  doorSound: {fileID: 8300000, guid: d6578dff25f2db14ba4af3578b9dd812, type: 3}
+  genSound: {fileID: 8300000, guid: e2887687172a7a94486053b928a819b1, type: 3}
 --- !u!114 &8544902603792313270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44257,12 +44247,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4297d7470f600ec43bb43eb304337d8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ak: {fileID: 8547341753389019013}
+  AK47: {fileID: 0}
   handGun: {fileID: 1726583373223966566}
   isAK: 0
   haveAK: 0
-  primaryWeapon: {fileID: 8543689055663817179}
-  secondaryWeapon: {fileID: 8543689056975850444}
 --- !u!1 &8544912141389956619
 GameObject:
   m_ObjectHideFlags: 0
@@ -44598,11 +44586,41 @@ MonoBehaviour:
   gunCamera: {fileID: 8563719416439071611}
   fovSpeed: 15
   defaultFov: 40
-  weaponName: Assault_Rifle_01
+  scope1: 0
+  scope1Texture: {fileID: 0}
+  scope1TextureSize: 0.0045
+  scope1AimFOV: 10
+  scope2: 0
+  scope2Texture: {fileID: 0}
+  scope2TextureSize: 0.01
+  scope2AimFOV: 25
+  scope3: 0
+  scope3Texture: {fileID: 0}
+  scope3TextureSize: 0.006
+  scope3AimFOV: 20
+  scope4: 0
+  scope4Texture: {fileID: 0}
+  scope4TextureSize: 0.0025
+  scope4AimFOV: 12
   ironSights: 0
   alwaysShowIronSights: 0
   ironSightsAimFOV: 16
   silencer: 0
+  WeaponAttachmentRenderers:
+    scope1Renderer: {fileID: 0}
+    scope2Renderer: {fileID: 0}
+    scope3Renderer: {fileID: 0}
+    scope4Renderer: {fileID: 0}
+    ironSightsRenderer: {fileID: 0}
+    silencerRenderer: {fileID: 0}
+    scope1RenderMesh: {fileID: 0}
+    scope2RenderMesh: {fileID: 0}
+    scope3RenderMesh: {fileID: 0}
+    scope4RenderMesh: {fileID: 0}
+    scope1SpriteRenderer: {fileID: 0}
+    scope2SpriteRenderer: {fileID: 0}
+    scope3SpriteRenderer: {fileID: 0}
+    scope4SpriteRenderer: {fileID: 0}
   weaponSway: 1
   swayAmount: 0.02
   maxSwayAmount: 0.06
@@ -44614,6 +44632,7 @@ MonoBehaviour:
   bulletForce: 100
   showBulletInMagDelay: 0.6
   bulletInMagRenderer: {fileID: 8608530629642072677}
+  grenadeSpawnDelay: 0.35
   randomMuzzleflash: 1
   maxRandomValue: 2
   enableMuzzleflash: 1
@@ -44626,13 +44645,14 @@ MonoBehaviour:
   lightDuration: 0.02
   mainAudioSource: {fileID: 8625553069544985619}
   shootAudioSource: {fileID: 8626611458486400463}
-  currentAmmoText: {fileID: 8543689055636375572}
-  totalAmmoText: {fileID: 8543689055701634437}
+  currentAmmoText: {fileID: 0}
+  totalAmmoText: {fileID: 0}
   Prefabs:
     bulletPrefab: {fileID: 4879702113200764, guid: 5953171a59c27394e9ad5cbb564affa8,
       type: 3}
     casingPrefab: {fileID: 4420745226056240, guid: 7be59128a5ee3424faf33d7a408c0b2e,
       type: 3}
+    grenadePrefab: {fileID: 0}
   Spawnpoints:
     casingSpawnPoint: {fileID: 8539278952589758729}
     bulletSpawnPoint: {fileID: 8547557579816598413}
@@ -44642,6 +44662,7 @@ MonoBehaviour:
     silencerShootSound: {fileID: 8300000, guid: f9ce3352943c16244a2e1504722c93c6,
       type: 3}
     takeOutSound: {fileID: 8300000, guid: 2ae41e984ff1f3e4a840a1a46b6a8816, type: 3}
+    holsterSound: {fileID: 0}
     reloadSoundOutOfAmmo: {fileID: 8300000, guid: 5b907074256e36d41b92e89fb0790633,
       type: 3}
     reloadSoundAmmoLeft: {fileID: 8300000, guid: f7ce534a0633b9847910ba117e2245d1,

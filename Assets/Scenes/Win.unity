@@ -559,12 +559,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00720198f0f80ef4697dbccb411a9e7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  start: {fileID: 1705416842}
-  controls: {fileID: 0}
-  credits: {fileID: 0}
-  exit: {fileID: 1425392696}
-  Control: {fileID: 0}
-  Credit: {fileID: 0}
+  startButton: {fileID: 1705416842}
+  controlButton: {fileID: 0}
+  creditButton: {fileID: 0}
+  exitButton: {fileID: 1425392696}
+  controlPanel: {fileID: 0}
+  creditPanel: {fileID: 0}
 --- !u!222 &388505428
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1196,7 +1196,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 18.600006, y: -7.100006}
+  m_AnchoredPosition: {x: 18.600006, y: -7.1000214}
   m_SizeDelta: {x: -290.5, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2032674459

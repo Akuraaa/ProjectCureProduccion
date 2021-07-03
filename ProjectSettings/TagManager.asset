@@ -20,8 +20,11 @@ TagManager:
   - Crowbar
   - Oil
   - Generator
-  - Healthpickup
   - AK47
+  - Melee
+  - HealthBox
+  - GrenadeBox
+  - Healthpickup
   layers:
   - Default
   - TransparentFX

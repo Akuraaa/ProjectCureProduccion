@@ -8,46 +8,47 @@ using UnityEngine;
 public class FPSController : MonoBehaviour
     {
 #pragma warning disable 649
-     [Header("Arms")]
-     [SerializeField]
-     public Transform arms;
-    
-     [SerializeField]
-     private Vector3 armPosition;
-    
-     [Header("Audio Clips")]
-     [SerializeField]
-     private AudioClip stepSound;
-    
-     [Header("Movement Settings")]
-     [SerializeField]
-     private float walkingSpeed = 5f;
-    
-     [SerializeField]
-     private float runningSpeed = 9f;
-    
-     [SerializeField]
-     private float movementSmoothness = 0.125f;
-    
-     [SerializeField]
-     private float jumpForce = 35f;
-    
-     [Header("Look Settings")]
-     [SerializeField]
-     public float mouseSensitivity = 7f;
-    
-     [SerializeField]
-     private float rotationSmoothness = 0.05f;
-    
-     [SerializeField]
-     private float minVerticalAngle = -90f;
-    
-     [SerializeField]
-     private float maxVerticalAngle = 90f;
-    
-     [SerializeField] private float footStepCooldown;
-     private float _footStepCooldown = .25f;
-     private bool canStep;
+    [Header("Arms")]
+    [Tooltip("The transform component that holds the gun camera."), SerializeField]
+    public Transform arms;
+
+    [Tooltip("The position of the arms and gun camera relative to the fps controller GameObject."), SerializeField]
+    private Vector3 armPosition;
+
+    [Header("Audio Clips")]
+    [Tooltip("The audio clip that is played while walking."), SerializeField]
+    private AudioClip walkingSound;
+
+    [Tooltip("The audio clip that is played while running."), SerializeField]
+    private AudioClip runningSound;
+
+    [Header("Movement Settings")]
+    [Tooltip("How fast the player moves while walking and strafing."), SerializeField]
+    private float walkingSpeed = 5f;
+
+    [Tooltip("How fast the player moves while running."), SerializeField]
+    private float runningSpeed = 9f;
+
+    [Tooltip("Approximately the amount of time it will take for the player to reach maximum running or walking speed."), SerializeField]
+    private float movementSmoothness = 0.125f;
+
+    [Tooltip("Amount of force applied to the player when jumping."), SerializeField]
+    private float jumpForce = 35f;
+
+    [Header("Look Settings")]
+    [Tooltip("Rotation speed of the fps controller."), SerializeField]
+    public float mouseSensitivity = 7f;
+
+    [Tooltip("Approximately the amount of time it will take for the fps controller to reach maximum rotation speed."), SerializeField]
+    private float rotationSmoothness = 0.05f;
+
+    [Tooltip("Minimum rotation of the arms and camera on the x axis."),
+     SerializeField]
+    private float minVerticalAngle = -90f;
+
+    [Tooltip("Maximum rotation of the arms and camera on the axis."),
+     SerializeField]
+    private float maxVerticalAngle = 90f;
 
     [Tooltip("The names of the axes and buttons for Unity's Input Manager."), SerializeField]
     private FpsInput input;
@@ -61,21 +62,20 @@ public class FPSController : MonoBehaviour
     private SmoothVelocity _velocityX;
     private SmoothVelocity _velocityZ;
     public bool _isGrounded;
-    
+
     private readonly RaycastHit[] _groundCastResults = new RaycastHit[8];
     private readonly RaycastHit[] _wallCastResults = new RaycastHit[8];
-    
+
     /// Initializes the FpsController on start.
     private void Start()
     {
-      
-        footStepCooldown = _footStepCooldown;
         _rigidbody = GetComponent<Rigidbody>();
         _rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
         _collider = GetComponent<CapsuleCollider>();
         _audioSource = GetComponent<AudioSource>();
         arms = AssignCharactersCamera();
-        //_audioSource.loop = true;
+        _audioSource.clip = walkingSound;
+        _audioSource.loop = true;
         _rotationX = new SmoothRotation(RotationXRaw);
         _rotationY = new SmoothRotation(RotationYRaw);
         _velocityX = new SmoothVelocity();
@@ -83,14 +83,14 @@ public class FPSController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         ValidateRotationRestriction();
     }
-    
+
     private Transform AssignCharactersCamera()
     {
         var t = transform;
         arms.SetPositionAndRotation(t.position, t.rotation);
         return arms;
     }
-    
+
     /// Clamps <see cref="minVerticalAngle"/> and <see cref="maxVerticalAngle"/> to valid values and
     /// ensures that <see cref="minVerticalAngle"/> is less than <see cref="maxVerticalAngle"/>.
     private void ValidateRotationRestriction()
@@ -103,7 +103,7 @@ public class FPSController : MonoBehaviour
         minVerticalAngle = maxVerticalAngle;
         maxVerticalAngle = min;
     }
-    
+
     private static float ClampRotationRestriction(float rotationRestriction, float min, float max)
     {
         if (rotationRestriction >= min && rotationRestriction <= max) return rotationRestriction;
@@ -111,7 +111,7 @@ public class FPSController : MonoBehaviour
         Debug.LogWarning(message);
         return Mathf.Clamp(rotationRestriction, min, max);
     }
-    
+
     /// Checks if the character is on the ground.
     private void OnCollisionStay()
     {
@@ -125,26 +125,37 @@ public class FPSController : MonoBehaviour
         {
             _groundCastResults[i] = new RaycastHit();
         }
-    
+
         _isGrounded = true;
     }
-    
+
     /// Processes the character movement and the camera rotation every fixed framerate frame.
     private void FixedUpdate()
     {
-        // FixedUpdate is used instead of Update because this code is dealing with physics and smoothing.
-        RotateCameraAndCharacter();
-        MoveCharacter();
-        _isGrounded = false;
+        if (FindObjectOfType<UIManager>().isPaused == false)
+        {
+            _audioSource.Pause();
+            RotateCameraAndCharacter();
+            MoveCharacter();
+            _isGrounded = false;
+
+        }
+        else
+        {
+            _audioSource.Play();
+        }
     }
-    
+
     /// Moves the camera to the character, processes jumping and plays sounds every frame.
     private void Update()
     {
-       
-        arms.position = transform.position + transform.TransformVector(armPosition);
-        Jump();
-        PlayFootstepSounds();
+        if (FindObjectOfType<UIManager>().isPaused == false)
+        {
+            
+            arms.position = transform.position + transform.TransformVector(armPosition);
+            Jump();
+            PlayFootstepSounds();
+        }
     }
 
     private void RotateCameraAndCharacter()
@@ -160,19 +171,19 @@ public class FPSController : MonoBehaviour
         transform.eulerAngles = new Vector3(0f, rotation.eulerAngles.y, 0f);
         arms.rotation = rotation;
     }
-    
+
     /// Returns the target rotation of the camera around the y axis with no smoothing.
     private float RotationXRaw
     {
         get { return input.RotateX * mouseSensitivity; }
     }
-    
+
     /// Returns the target rotation of the camera around the x axis with no smoothing.
     private float RotationYRaw
     {
         get { return input.RotateY * mouseSensitivity; }
     }
-    
+
     /// Clamps the rotation of the camera around the x axis
     /// between the <see cref="minVerticalAngle"/> and <see cref="maxVerticalAngle"/> values.
     private float RestrictVerticalRotation(float mouseY)
@@ -182,7 +193,7 @@ public class FPSController : MonoBehaviour
         var maxY = maxVerticalAngle + currentAngle;
         return Mathf.Clamp(mouseY, minY + 0.01f, maxY - 0.01f);
     }
-    
+
     /// Normalize an angle between -180 and 180 degrees.
     /// <param name="angleDegrees">angle to normalize</param>
     /// <returns>normalized angle</returns>
@@ -192,15 +203,15 @@ public class FPSController : MonoBehaviour
         {
             angleDegrees -= 360f;
         }
-    
+
         while (angleDegrees <= -180f)
         {
             angleDegrees += 360f;
         }
-    
+
         return angleDegrees;
     }
-    
+
     private void MoveCharacter()
     {
         var direction = new Vector3(input.Move, 0f, input.Strafe).normalized;
@@ -213,14 +224,14 @@ public class FPSController : MonoBehaviour
             _velocityX.Current = _velocityZ.Current = 0f;
             return;
         }
-    
+
         var smoothX = _velocityX.Update(velocity.x, movementSmoothness);
         var smoothZ = _velocityZ.Update(velocity.z, movementSmoothness);
         var rigidbodyVelocity = _rigidbody.velocity;
         var force = new Vector3(smoothX - rigidbodyVelocity.x, 0f, smoothZ - rigidbodyVelocity.z);
         _rigidbody.AddForce(force, ForceMode.VelocityChange);
     }
-    
+
     private bool CheckCollisionsWithWalls(Vector3 velocity)
     {
         if (_isGrounded) return false;
@@ -239,91 +250,78 @@ public class FPSController : MonoBehaviour
         {
             _wallCastResults[i] = new RaycastHit();
         }
-    
+
         return true;
     }
-    
+
     private void Jump()
     {
         if (!_isGrounded || !input.Jump) return;
         _isGrounded = false;
         _rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
     }
-    
+
     private void PlayFootstepSounds()
     {
-       //if (_isGrounded && _rigidbody.velocity.sqrMagnitude > 0.1f)
-       //{
-       //    _audioSource.clip = input.Run ? runningSound : walkingSound;
-       //    if (!_audioSource.isPlaying)
-       //    {
-       //        _audioSource.Play();
-       //    }
-       //}
-       //else
-       //{
-       //    if (_audioSource.isPlaying)
-       //    {
-       //        _audioSource.Pause();
-       //    }
-       //}
-       footStepCooldown -= Time.deltaTime;
-       if (footStepCooldown <= 0)
-           canStep = true;
-    
-       if(Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)
-       {
-           if (canStep && _isGrounded)
-           {
-               _audioSource.PlayOneShot(stepSound);
-               footStepCooldown = _footStepCooldown;
-               canStep = false;
-           }
-       }
+        if (_isGrounded && _rigidbody.velocity.sqrMagnitude > 0.1f)
+        {
+            _audioSource.clip = input.Run ? runningSound : walkingSound;
+            if (!_audioSource.isPlaying)
+            {
+                _audioSource.Play();
+            }
+        }
+        else
+        {
+            if (_audioSource.isPlaying)
+            {
+                _audioSource.Pause();
+            }
+        }
     }
-    
+
     /// A helper for assistance with smoothing the camera rotation.
     private class SmoothRotation
     {
         private float _current;
         private float _currentVelocity;
-    
+
         public SmoothRotation(float startAngle)
         {
             _current = startAngle;
         }
-    
+
         /// Returns the smoothed rotation.
         public float Update(float target, float smoothTime)
         {
             return _current = Mathf.SmoothDampAngle(_current, target, ref _currentVelocity, smoothTime);
         }
-    
+
         public float Current
         {
             set { _current = value; }
         }
     }
-    
+
     /// A helper for assistance with smoothing the movement.
     private class SmoothVelocity
     {
         private float _current;
         private float _currentVelocity;
-    
+
         /// Returns the smoothed velocity.
         public float Update(float target, float smoothTime)
         {
             return _current = Mathf.SmoothDamp(_current, target, ref _currentVelocity, smoothTime);
         }
-    
+
         public float Current
         {
             set { _current = value; }
         }
     }
-    
-    
+
+
     /// Input mappings
     [Serializable]
     private class FpsInput
