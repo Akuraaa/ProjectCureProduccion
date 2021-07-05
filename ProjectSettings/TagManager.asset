@@ -25,6 +25,7 @@ TagManager:
   - HealthBox
   - GrenadeBox
   - Healthpickup
+  - Music
   layers:
   - Default
   - TransparentFX
