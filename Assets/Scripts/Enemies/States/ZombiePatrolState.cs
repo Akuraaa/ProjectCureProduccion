@@ -17,10 +17,12 @@ public class ZombiePatrolState : ZombieState
     public override void Execute()
     {
         base.Execute();
-        Transform target = _zombie.waypoints[_zombie.currentWaypointTarget];
-        _zombie.transform.LookAt(target);
 
-        if (Vector3.Distance(_zombie.transform.position, target.transform.position) < .5f)
+        _zombie.direction = new Vector3(_zombie.waypoints[_zombie.currentWaypointTarget].position.x, _zombie.transform.position.y, _zombie.waypoints[_zombie.currentWaypointTarget].position.z);
+        _zombie.transform.rotation = Quaternion.LookRotation(_zombie.direction - _zombie.transform.position);
+        _zombie.transform.position += _zombie.transform.forward * _zombie.speed * Time.deltaTime;
+
+        if (Vector3.Distance(_zombie.transform.position, _zombie.waypoints[_zombie.currentWaypointTarget].transform.position) < .5f)
         {
             if (_zombie.currentWaypointTarget < _zombie.waypoints.Count - 1)
             {

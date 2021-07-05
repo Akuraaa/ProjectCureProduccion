@@ -34,11 +34,16 @@ public class EnemyDecisionTree : MonoBehaviour
 
         _isPlayerInRange = new QuestionNode(_zombie.QuestionRangeAttack, _actionRangeAttack, _actionSeek);
         _isPlayerInMelee = new QuestionNode(_zombie.QuestionMeleeAttack, _actionMeleeAttack, _actionSeek);
-        _isPlayerInSight = new QuestionNode(_zombie.QuestionIsPlayerOnSight, _isPlayerInRange, _actionPatrol);
+        if (_zombie.isRange)
+        {
+            _isPlayerInSight = new QuestionNode(_zombie.QuestionIsPlayerOnSight, _actionSeek, _actionPatrol);
+        }
+        else
+        {
+            _isPlayerInSight = new QuestionNode(_zombie.QuestionIsPlayerOnSight, _actionSeek, _actionPatrol);
+        }
         _isDie = new QuestionNode(_zombie.HaveLifeQuestion,_actionDie, _isPlayerInSight);
 
         _init = _isDie;
-    }
-
-    
+    }   
 }

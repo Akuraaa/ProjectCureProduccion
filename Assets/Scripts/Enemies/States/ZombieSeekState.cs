@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class ZombieSeekState : ZombieState
 {
-    Transform target;
-    float obstacleAvoidanceDistance = 5;
-    Vector3 avoidance = Vector3.zero;
-
     public ZombieSeekState(StateMachine sm, ZombieIA zombie) : base(sm, zombie)
     {
     }
@@ -19,30 +15,23 @@ public class ZombieSeekState : ZombieState
     public override void Execute()
     {
         base.Execute();
-        avoidance = Vector3.zero;
-        float minDistance = obstacleAvoidanceDistance;
-        RaycastHit ray;
-        target = _zombie.player.transform;
-        _zombie.transform.LookAt(target);
-        if (Physics.Raycast(_zombie.transform.position, _zombie.transform.forward, out ray, obstacleAvoidanceDistance))
-        {
-            for (int i = 10; i <= 180; i += 10)
-            {
-                bool collide = false;
-                if (Physics.Raycast(_zombie.transform.position, Quaternion.AngleAxis(i, Vector3.up) * _zombie.transform.forward, out ray, obstacleAvoidanceDistance))
-                    collide = true;
-                else
-                    avoidance = Quaternion.AngleAxis(i, Vector3.up) * _zombie.transform.forward;
+        _zombie.direction = new Vector3(_zombie.player.transform.position.x, _zombie.transform.position.y, _zombie.player.transform.position.z);
+        _zombie.transform.rotation = Quaternion.LookRotation(_zombie.direction - _zombie.transform.position);
+        _zombie.transform.position += _zombie.transform.forward * _zombie.speed * Time.deltaTime;
 
-                if (Physics.Raycast(_zombie.transform.position, Quaternion.AngleAxis(-i, Vector3.up) * _zombie.transform.forward, out ray, obstacleAvoidanceDistance))
-                    collide = true;
-                else
-                    avoidance = Quaternion.AngleAxis(-i, Vector3.up) * _zombie.transform.forward;
-                if (collide) continue;
-                break;
+        if (_zombie.isRange)
+        {
+            if (_zombie.QuestionRangeAttack())
+            {
+                _sm.SetState<ZombieRangeAttackState>();
             }
         }
-        float speedMulti = minDistance / obstacleAvoidanceDistance;
-        avoidance.Normalize();
+        else
+        {
+            if (_zombie.QuestionRangeAttack())
+            {
+                _sm.SetState<ZombieMeleeAttackState>();
+            }
+        }
     }
 }

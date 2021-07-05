@@ -12,6 +12,8 @@ public class BulletScript : MonoBehaviour {
 	public float minDestroyTime;
 	[Tooltip("Maximum time after impact that the bullet is destroyed")]
 	public float maxDestroyTime;
+	[Tooltip("Damage of the bullet to gameObjects")]
+	public int damage;
 
 	[Header("Impact Effect Prefabs")]
 	public Transform [] bloodImpactPrefabs;
@@ -51,6 +53,22 @@ public class BulletScript : MonoBehaviour {
 			Physics.IgnoreCollision(collision.collider, GetComponent<Collider>());
 
 		}
+
+		//If bullet collides with "Enemy" tag
+		if (collision.gameObject.tag == "Enemy")
+        {
+			//Instantiate random impact prefab from array
+			Instantiate(bloodImpactPrefabs[Random.Range(0, bloodImpactPrefabs.Length)], transform.position, Quaternion.LookRotation(collision.contacts[0].normal));
+			if (collision.gameObject.GetComponent<ZombieIA>())
+            {
+				//Take damage from bullet to Enemy
+				collision.transform.GetComponent<ZombieIA>().TakeDamage(damage);
+				//Physics.IgnoreCollision(collision.collider, GetComponent<Collider>(), true);
+
+			}
+			//Destroy bullet object
+			Destroy(gameObject);
+        }
 
 		//If bullet collides with "Blood" tag
 		if (collision.transform.tag == "Blood") 

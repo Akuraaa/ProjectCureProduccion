@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ZombieIA : Target
+public class ZombieIA : MonoBehaviour
 {
-    public bool isRange;
+    [Header("Zombie Stats")]
+    public int health;
+    public int damage;
+    public float speed;
     public float minIdleTime = 3;
     public float maxIdleTime = 5;
     public float fireRate = 1.5f;
@@ -12,29 +15,41 @@ public class ZombieIA : Target
     public float rangeDistanceAttack;
     public float meleeDistanceAttack;
     public float radius;
-    public float spped;
+    public float invulnerabilityTime = .5f;
+    public float timeToDie;
+    public float turnSpeed = .01f;
+    [HideInInspector] public Vector3 direction;
+    [HideInInspector] public Quaternion rotGoal;
 
+    [Header("Zombie Components")]
     public Transform axeSpawn;
     public GameObject axePrefab;
     public LayerMask _lm;
+    public LayerMask groundMask;
     public FPSController player;
-
-    public List<Transform> waypoints = new List<Transform>();
-    public int currentWaypointTarget = 0;
-
-    public bool playerInRange = false;
-    public bool playerInMelee = false;
-    public bool playerInSight = false;
-    public bool view;
-
     public Animator animator;
     public SphereCollider visionRange;
-
     public StateMachine sm;
     public EnemyDecisionTree enemyTree;
     public AudioSource audioSource;
 
-    public AudioClip meleeAttack, rangeAttack;
+    [Header("Zombie Waypoints")]
+    public List<Transform> waypoints = new List<Transform>();
+    public int currentWaypointTarget = 0;
+
+    [Header("Zombie booleans")]
+    public bool isRange;
+    public bool playerInRange = false;
+    public bool playerInMelee = false;
+    public bool playerInSight = false;
+    public bool view;
+    public bool _isDead = false;
+    private bool _isReceivingDamage = false;
+
+    [Header("Zombie Audioclips")]
+    public AudioClip meleeAttack;
+    public AudioClip rangeAttack;
+    public AudioClip receiveDamage;
 
     private void Awake()
     {
@@ -49,6 +64,8 @@ public class ZombieIA : Target
         player = FindObjectOfType<FPSController>();
         enemyTree = new EnemyDecisionTree(this);
         enemyTree.SetNodes();
+        audioSource = GetComponent<AudioSource>();
+        animator = GetComponent<Animator>();
     }
 
     private void Start()
@@ -75,6 +92,24 @@ public class ZombieIA : Target
                 visionRange.radius /= 2;
                 viewAngle /= 1.5f;
             }
+        }
+
+
+    }
+
+    public void TakeDamage(int amount)
+    {
+        if (health > 0)
+        {
+            health -= amount;
+            audioSource.PlayOneShot(receiveDamage);
+            speed = 0;
+            animator.SetTrigger("ZombieHit");
+            enemyTree._init.Execute();
+        }
+        if (health <= 0)
+        {
+            ActionDie();
         }
     }
 
@@ -151,13 +186,13 @@ public class ZombieIA : Target
 
     public bool QuestionMeleeAttack()
     {
-        view = true;
+        //view = true;
         return Vector3.Distance(transform.position, player.transform.position) < meleeDistanceAttack;
     }
 
     public bool QuestionRangeAttack()
     {
-        view = true;
+        //view = true;
         return Vector3.Distance(transform.position, player.transform.position) < rangeDistanceAttack;
     }
 

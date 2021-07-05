@@ -32,6 +32,8 @@ public class PlayerStats : MonoBehaviour
     public AudioSource audioSource;
     private UIManager uiManager;
 
+
+    public Image healScreen, alphaBloody;
     private void Start()
     {
         uiManager = FindObjectOfType<UIManager>();
@@ -85,6 +87,7 @@ public class PlayerStats : MonoBehaviour
             SceneManager.LoadScene("Derrota");
         }
     }
+
 
     private void OnTriggerEnter(Collider other)
     {
