@@ -27,6 +27,8 @@ TagManager:
   - Healthpickup
   - Music
   - AmbientMusic
+  - PlayButton
+  - ExitButton
   layers:
   - Default
   - TransparentFX
@@ -47,7 +49,7 @@ TagManager:
   - PaperCode
   - sparks
   - EnemyDeath
-  - 
+  - Background
   - 
   - 
   - 
