@@ -165,7 +165,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 24.05
+  m_fontSize: 24.25
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -37095,6 +37095,7 @@ Transform:
   m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 4689749023438673802}
   - {fileID: 2792780038781020236}
   - {fileID: 2800766458768524602}
   - {fileID: 2792657605036106036}
@@ -42753,7 +42754,7 @@ Transform:
   - {fileID: 2792713973072574356}
   - {fileID: 2792453387009792336}
   m_Father: {fileID: 2800975572843576274}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2794712937107788512
 GameObject:
@@ -43060,7 +43061,6 @@ Transform:
   m_Children:
   - {fileID: 7161536698872563469}
   - {fileID: 2800975572843576274}
-  - {fileID: 4689749023438673802}
   m_Father: {fileID: 261871297437209322}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -43829,7 +43829,7 @@ Transform:
   - {fileID: 2792368631521739902}
   - {fileID: 2792361339805375220}
   m_Father: {fileID: 2800975572843576274}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!137 &2821196047442857858
 SkinnedMeshRenderer:
@@ -44595,9 +44595,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2800766458768524602}
   - component: {fileID: 2821239043589649830}
+  - component: {fileID: 7892576107222027017}
   m_Layer: 8
   m_Name: knife 1
-  m_TagString: Untagged
+  m_TagString: Knife
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44614,7 +44615,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2800975572843576274}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!137 &2821239043589649830
 SkinnedMeshRenderer:
@@ -44699,6 +44700,19 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.414308, y: 0.2668282, z: 0.13660154}
     m_Extent: {x: 0.10279411, y: 0.10349721, z: 0.10215309}
   m_DirtyAABB: 0
+--- !u!65 &7892576107222027017
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2795440221979253618}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.17028135, y: 0.12645188, z: 0.5023383}
+  m_Center: {x: -0.24275827, y: -0.7317362, z: 1.1714509}
 --- !u!1 &2795469107294624790
 GameObject:
   m_ObjectHideFlags: 0
@@ -45406,7 +45420,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.01
+  near clip plane: 0.05
   far clip plane: 5
   field of view: 40
   orthographic: 0
@@ -45419,8 +45433,8 @@ Camera:
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
+  m_HDR: 0
+  m_AllowMSAA: 0
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
@@ -50223,7 +50237,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 35.7
+  m_fontSize: 35.9
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -50379,7 +50393,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 35.7
+  m_fontSize: 35.9
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -51062,7 +51076,7 @@ MonoBehaviour:
     scope3RenderMesh: {fileID: 4707354630293854130}
     scope2SpriteRenderer: {fileID: 4874981527451544468}
     scope3SpriteRenderer: {fileID: 4874588209824880492}
-  weaponSway: 1
+  weaponSway: 0
   swayAmount: 0.02
   maxSwayAmount: 0.06
   swaySmoothValue: 4
@@ -57253,9 +57267,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4703079400357644188}
   - component: {fileID: 4664879030342919852}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: knife 1
-  m_TagString: Untagged
+  m_TagString: Knife
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -57268,7 +57282,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4706986686621501846}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0, y: -1, z: 0}
+  m_LocalPosition: {x: -0, y: -1, z: 0.027}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4703437667453675062}
@@ -64028,7 +64042,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 40.95
+  m_fontSize: 41
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -65318,10 +65332,10 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8940920823133343168}
-  m_LocalRotation: {x: -0.726968, y: 0.014026178, z: -0.013243476, w: 0.68640035}
-  m_LocalPosition: {x: -0.174, y: -0.92300016, z: -0.24000007}
+  m_LocalRotation: {x: -0.02868566, y: 0.019282557, z: 0.0005534543, w: 0.9994024}
+  m_LocalPosition: {x: -0.174, y: 0.2399998, z: 0.07699987}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 2800790510649416454}
-  m_RootOrder: 2
+  m_Father: {fileID: 2800975572843576274}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 86.038, y: 33.877003, z: 33.941}

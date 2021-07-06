@@ -776,8 +776,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -4.880742, y: -2.2150497, z: -47.83764}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 4228178569987627614}
+  m_Children: []
   m_Father: {fileID: 1002480845}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -61418,6 +61417,7 @@ Transform:
   - {fileID: 1641088182}
   - {fileID: 551502159}
   - {fileID: 1044948417}
+  - {fileID: 4228178569987627614}
   m_Father: {fileID: 1002480845}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -77408,7 +77408,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 10642730}
+    m_TransformParent: {fileID: 1687771993}
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: m_RootOrder
@@ -77434,7 +77434,7 @@ PrefabInstance:
     - target: {fileID: 4228178569535116334, guid: c2bafa8535563204abf4b4695a7df767,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -14.49
+      value: -14.490001
       objectReference: {fileID: 0}
     - target: {fileID: 4228178569535116334, guid: c2bafa8535563204abf4b4695a7df767,
         type: 3}
@@ -77444,7 +77444,7 @@ PrefabInstance:
     - target: {fileID: 4228178569535116334, guid: c2bafa8535563204abf4b4695a7df767,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -54.34
+      value: -54.340004
       objectReference: {fileID: 0}
     - target: {fileID: 4228178569535116334, guid: c2bafa8535563204abf4b4695a7df767,
         type: 3}
@@ -77469,7 +77469,7 @@ PrefabInstance:
     - target: {fileID: 4228178569535116334, guid: c2bafa8535563204abf4b4695a7df767,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 4228178569535116334, guid: c2bafa8535563204abf4b4695a7df767,
         type: 3}
@@ -77505,6 +77505,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GiantBox
+      objectReference: {fileID: 0}
+    - target: {fileID: 5287633021801772296, guid: 21f1ca6823fefb54a96844802dbdcc71,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5287633021801772302, guid: 21f1ca6823fefb54a96844802dbdcc71,
         type: 3}

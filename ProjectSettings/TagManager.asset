@@ -29,6 +29,7 @@ TagManager:
   - AmbientMusic
   - PlayButton
   - ExitButton
+  - Knife
   layers:
   - Default
   - TransparentFX
