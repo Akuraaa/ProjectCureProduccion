@@ -230,7 +230,7 @@ public class UIManager : MonoBehaviour
 
         if (other.gameObject.CompareTag("Generator"))
         {
-            switch (playerStats.genCount)
+            switch (playerStats.oilCount)
             {
                 case 0:
                     oilImg.gameObject.SetActive(true);
@@ -244,6 +244,10 @@ public class UIManager : MonoBehaviour
                 case 2:
                     situationText.gameObject.SetActive(true);
                     situationText.text = "Necesitas mas combustible";
+                    break;
+                case 3:
+                    situationText.gameObject.SetActive(true);
+                    situationText.text = "La puerta se ha abierto";
                     break;
             }
         }

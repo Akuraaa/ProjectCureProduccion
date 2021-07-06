@@ -10,9 +10,7 @@ public class PlayerStats : MonoBehaviour
     public float maxHealth = 100;
     public float curHealth = 0;
     public int oilCount = 0;
-    private bool _lockedGen = false;
     private bool lockDoor = false;
-    public int genCount = 0;
     public int grenadeCount = 0;
 
     public bool hitPlayer = false;
@@ -24,9 +22,10 @@ public class PlayerStats : MonoBehaviour
     public GameObject[] sparks;
     public GameObject giantBoxCollider;
     public GameObject finalDoor;
+    public GameObject finalHorde;
 
     [SerializeField] private Color normalColor, warningColor;
-    [SerializeField] public AudioClip pickUp, healthSound;
+    [SerializeField] public AudioClip pickUp, healthSound, finalHordeSound;
 
     public AudioClip doorSound, genSound;
     public AudioSource audioSource;
@@ -37,7 +36,6 @@ public class PlayerStats : MonoBehaviour
     private void Start()
     {
         uiManager = FindObjectOfType<UIManager>();
-        _lockedGen = false;
         
         oilCount = 0;
 
@@ -106,7 +104,6 @@ public class PlayerStats : MonoBehaviour
 
         if (other.gameObject.CompareTag("Crowbar"))
         {
-            _lockedGen = false;
             if (!haveCrowbar)
             {
                 haveCrowbar = true;
@@ -136,7 +133,6 @@ public class PlayerStats : MonoBehaviour
 
         if (other.gameObject.CompareTag("Door"))
         {
-            _lockedGen = false;
             if (oilCount == 3)
             {
                 if (Input.GetKeyDown(KeyCode.F))
@@ -158,68 +154,18 @@ public class PlayerStats : MonoBehaviour
 
         if (other.gameObject.CompareTag("Generator"))
         {
-            _lockedGen = true;
-            if (_lockedGen)
+            if (oilCount < 3)
             {
-                genCount = oilCount;
+                finalDoor.GetComponent<Animator>().SetTrigger("Open");
+                finalDoor.GetComponent<AudioSource>().PlayOneShot(doorSound);
+                finalHorde.SetActive(true);
+                finalHorde.GetComponent<AudioSource>().PlayOneShot(finalHordeSound);
             }
-
-            switch (genCount)
-            {
-                case 0:
-                    if (Input.GetKeyDown(KeyCode.F) & !lockDoor)
-                    {
-                        finalDoor.GetComponent<Animator>().SetInteger("OilCount", 0);
-                        lockDoor = true;
                        
-                    }
-                    break;
-                case 1:
-                    if (Input.GetKeyDown(KeyCode.F) & !lockDoor)
-                    {
-                        finalDoor.GetComponent<Animator>().SetInteger("OilCount", 1);
-                        finalDoor.GetComponent<AudioSource>().PlayOneShot(doorSound);
-                        lockDoor = true;
-                        other.gameObject.GetComponent<AudioSource>().enabled = true;
-                        if (finalDoor.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
-                        {
-                            other.gameObject.GetComponent<AudioSource>().Stop();
-                        }
-                    }
-                    break;
-                case 2:
-                    if (Input.GetKeyDown(KeyCode.F) & !lockDoor)
-                    {
-                        finalDoor.GetComponent<Animator>().SetInteger("OilCount", 2);
-                        finalDoor.GetComponent<AudioSource>().PlayOneShot(doorSound);
-                        lockDoor = true;
-                        other.gameObject.GetComponent<AudioSource>().Play();
-                        if (finalDoor.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
-                        {
-                            other.gameObject.GetComponent<AudioSource>().Pause();
-                        }
-                    }
-                    break;
-                case 3:
-                    if (Input.GetKeyDown(KeyCode.F) & !lockDoor)
-                    {
-                        other.GetComponent<Outline>().enabled = false;
-                        finalDoor.GetComponent<Animator>().SetInteger("OilCount", 3);
-                        finalDoor.GetComponent<AudioSource>().PlayOneShot(doorSound);
-                        lockDoor = true;
-                        other.gameObject.GetComponent<AudioSource>().Play();
-                        if (finalDoor.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
-                        {
-                            other.gameObject.GetComponent<AudioSource>().Pause();
-                        }
-                    }
-                    break;
-            }
         }
 
         if (other.gameObject.CompareTag("Oil"))
         {
-            _lockedGen = false;
             lockDoor = false;
             if (oilCount < 3)
             {
@@ -233,12 +179,8 @@ public class PlayerStats : MonoBehaviour
             }
         }
 
-        
-
-
         if (other.gameObject.CompareTag("ElectricBox"))
         {
-            _lockedGen = false;
             bool haveExplosion = false;
             if (haveCrowbar)
             {         
@@ -258,38 +200,6 @@ public class PlayerStats : MonoBehaviour
 
         }
 
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-       if (other.gameObject.CompareTag("Door"))
-       {
-            _lockedGen = false;
-       }
-       if (other.gameObject.CompareTag("AK47"))
-       {
-           _lockedGen = false;
-       }
-       if (other.gameObject.CompareTag("Crowbar"))
-       {
-            _lockedGen = false;
-       }
-       if (other.gameObject.CompareTag("Electricity"))
-       {
-            _lockedGen = false;
-       }
-       if (other.gameObject.CompareTag("ElectricBox"))
-       {
-            _lockedGen = false;
-       }
-       if (other.gameObject.CompareTag("Generator"))
-       {
-            _lockedGen = false;
-       }
-       if (other.gameObject.CompareTag("Oil"))
-       {
-            _lockedGen = false;
-       }
     }
 
     //private void SetLightning()
