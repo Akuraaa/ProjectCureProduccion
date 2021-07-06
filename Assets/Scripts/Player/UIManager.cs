@@ -154,10 +154,10 @@ public class UIManager : MonoBehaviour
     public IEnumerator AlphaBloody()
     {
         bool ignore = false;
-        healingScreen.enabled = true;
-        healingScreen.canvasRenderer.SetAlpha(1);
+        bloodyScreen.enabled = true;
+        bloodyScreen.canvasRenderer.SetAlpha(1);
         damageParticle.Play();
-        healingScreen.CrossFadeAlpha(0, 1, ignore);
+        bloodyScreen.CrossFadeAlpha(0, 1, ignore);
         yield return new WaitForSeconds(.5f);
         ignore = true;
     }
@@ -179,7 +179,7 @@ public class UIManager : MonoBehaviour
         {
             if (playerStats.curHealth < 100)
             {
-                AlphaHeal();
+                StartCoroutine(AlphaHeal());
             }
         }
 

@@ -101,6 +101,7 @@ public class PlayerStats : MonoBehaviour
                     curHealth = 100;
             }
             Destroy(other.gameObject);
+            uiManager.StartCoroutine(uiManager.AlphaHeal());
         }
 
         if (other.gameObject.CompareTag("Crowbar"))

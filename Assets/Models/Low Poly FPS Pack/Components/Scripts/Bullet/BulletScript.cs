@@ -59,10 +59,9 @@ public class BulletScript : MonoBehaviour {
         {
 			//Instantiate random impact prefab from array
 			Instantiate(bloodImpactPrefabs[Random.Range(0, bloodImpactPrefabs.Length)], transform.position, Quaternion.LookRotation(collision.contacts[0].normal));
-			if (collision.gameObject.GetComponent<ZombieIA>())
-            {
-				//Take damage from bullet to Enemy
-				collision.transform.GetComponent<ZombieIA>().TakeDamage(damage);
+			if (collision.gameObject.GetComponent<Target>().invulnerabilityTime <= 0)
+			{
+				collision.transform.GetComponent<Target>().TakeDamage(damage);
 				//Physics.IgnoreCollision(collision.collider, GetComponent<Collider>(), true);
 
 			}
