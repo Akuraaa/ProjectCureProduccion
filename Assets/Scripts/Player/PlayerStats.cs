@@ -91,6 +91,7 @@ public class PlayerStats : MonoBehaviour
     {
         if (other.gameObject.CompareTag("HealthBox"))
         {
+            uiManager.situationText.gameObject.SetActive(false);
             audioSource.PlayOneShot(healthSound);
             if (curHealth < 100)
             {
@@ -135,31 +136,37 @@ public class PlayerStats : MonoBehaviour
         {
             if (oilCount == 3)
             {
-                if (Input.GetKeyDown(KeyCode.F))
-                {            
-                    openDoor = true;
-                    if (openDoor)
-                    {
-                        SceneManager.LoadScene("Win");
-                    }
-                }
+                //{
+                //    if (Input.GetKeyDown(KeyCode.F))
+                //    {            
+                //        openDoor = true;
+                //        if (openDoor)
+                //        {
+                SceneManager.LoadScene("Win");
             }
+                    //}
             else
             {
                 uiManager.situationText.gameObject.SetActive(true);
                 uiManager.situationText.text = "No puedes abrir porque no hay electricidad";
             }
-
         }
+
 
         if (other.gameObject.CompareTag("Generator"))
         {
-            if (oilCount < 3)
+            if (oilCount == 3)
             {
-                finalDoor.GetComponent<Animator>().SetTrigger("Open");
-                finalDoor.GetComponent<AudioSource>().PlayOneShot(doorSound);
-                finalHorde.SetActive(true);
-                finalHorde.GetComponent<AudioSource>().PlayOneShot(finalHordeSound);
+                uiManager.situationText.gameObject.SetActive(true);
+                uiManager.situationText.text = "Presiona F para abrir la puerta";
+                if (Input.GetKeyDown(KeyCode.F))
+                {
+                    finalDoor.GetComponent<Animator>().SetTrigger("Open");
+                    finalDoor.GetComponent<AudioSource>().PlayOneShot(doorSound);
+                    finalHorde.SetActive(true);
+                    finalHorde.GetComponent<AudioSource>().PlayOneShot(finalHordeSound);
+
+                }
             }
                        
         }
@@ -169,12 +176,14 @@ public class PlayerStats : MonoBehaviour
             lockDoor = false;
             if (oilCount < 3)
             {
-
+                uiManager.situationText.gameObject.SetActive(true);
+                uiManager.situationText.text = "Presiona F para agarrar";
                 if (Input.GetKeyDown(KeyCode.F))
                 {
                     oilCount += 1;
                     audioSource.PlayOneShot(pickUp);
                     Destroy(other.gameObject);
+                    uiManager.situationText.gameObject.SetActive(false);
                 }
             }
         }

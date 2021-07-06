@@ -94,25 +94,31 @@ public class UIManager : MonoBehaviour
         else
             playerStats.electricityBox.SetActive(true);
 
-        if (FindObjectOfType<WeaponDisplay>().haveAK)
-        {
-            if (FindObjectOfType<AutomaticGunScriptLPFP>().isAiming == true)
+       if (weaponDisplay.haveAK)
+       {
+           if (weaponDisplay.isAK)
+           {
+               if (FindObjectOfType<AutomaticGunScriptLPFP>().isActiveAndEnabled && FindObjectOfType<AutomaticGunScriptLPFP>().isAiming == true)
+               {
+                   crosshair.gameObject.SetActive(false);
+               }
+               else
+               {
+                   crosshair.gameObject.SetActive(true);
+               }
+           }
+       }
+
+       if (weaponDisplay.isAK == false)
+       {
+            if (FindObjectOfType<HandgunScriptLPFP>().isAiming == true && FindObjectOfType<HandgunScriptLPFP>().isActiveAndEnabled)
             {
                 crosshair.gameObject.SetActive(false);
             }
             else
-            {
                 crosshair.gameObject.SetActive(true);
-            }
 
-        }
-
-        if (FindObjectOfType<HandgunScriptLPFP>().isAiming == true)
-        {
-            crosshair.gameObject.SetActive(false);
-        }
-        else
-            crosshair.gameObject.SetActive(true);
+       }
 
         if (playerStats.haveGrenade)
         {
@@ -199,6 +205,7 @@ public class UIManager : MonoBehaviour
             situationText.gameObject.SetActive(true);
             if (Input.GetKeyDown(KeyCode.F))
             {
+                FindObjectOfType<WeaponDisplay>().haveAK = true;
                 situationText.gameObject.SetActive(false);
                 AKImg.gameObject.SetActive(true);
             }

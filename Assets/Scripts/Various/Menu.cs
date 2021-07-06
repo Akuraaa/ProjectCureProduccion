@@ -16,6 +16,7 @@ public class Menu : MonoBehaviour
 
     void Start()
     {
+        Time.timeScale = 1;
         controlPanel.SetActive(false);
         creditPanel.SetActive(false);
         Cursor.visible = true;
