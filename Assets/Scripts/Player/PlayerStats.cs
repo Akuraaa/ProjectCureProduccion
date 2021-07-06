@@ -129,7 +129,7 @@ public class PlayerStats : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.F))
             {
-                GetComponent<WeaponDisplay>().haveAK = true;
+                FindObjectOfType<WeaponDisplay>().haveAK = true;
                 Destroy(other.gameObject);
             }
         }

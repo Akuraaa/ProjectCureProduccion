@@ -23,7 +23,7 @@ public class WeaponDisplay : MonoBehaviour
                 isAK = true;
                 AK47.transform.position = handGun.transform.position;
                 AK47.transform.rotation = handGun.transform.rotation;
-                GetComponent<FPSController>().arms = AK47;
+                FindObjectOfType<FPSController>().arms = AK47;
                 StartCoroutine(changeWeapon());
                 handGun.gameObject.SetActive(false);
             }
@@ -35,7 +35,7 @@ public class WeaponDisplay : MonoBehaviour
             isAK = false;
             handGun.transform.position = AK47.transform.position;
             handGun.transform.rotation = AK47.transform.rotation;
-            GetComponent<FPSController>().arms = handGun;
+            FindObjectOfType<FPSController>().arms = handGun;
             StartCoroutine(changeWeapon());
             AK47.gameObject.SetActive(false);
 
