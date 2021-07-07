@@ -24,7 +24,7 @@ public class Enemy : Target
 	int wallMask = 1 << 10;
 
 	public bool cooldown;
-	public float cooldowntime = 1;
+	public float cooldowntime;
 	private float _cooldowntime = 1;
 
 	private Vector3 rotation;
@@ -42,7 +42,6 @@ public class Enemy : Target
 		cooldowntime = _zombieHit.length * 2;
 		_cooldowntime = _zombieHit.length * 2;
 	}
-
 
 	private void Update()
 	{
@@ -81,7 +80,6 @@ public class Enemy : Target
 		}
 	}
 
-
 	void Move()
 	{
 
@@ -118,7 +116,7 @@ public class Enemy : Target
 
 				else if (Physics.Raycast(transform.position, Direction, out hit, followRange, playerMask))
 				{
-					followTarget = true;
+					followTarget = true;					
 					_anim.SetBool("IsRunning", true);
 					_anim.SetBool("IsWalking", false);
 					transform.rotation = Quaternion.LookRotation(lookplayer - transform.position);
@@ -163,7 +161,6 @@ public class Enemy : Target
 		}
 
 	}
-
 
 	void Cooldown()
 	{
@@ -215,10 +212,10 @@ public class Enemy : Target
 		}
 	}
 
-	public void OnAnimatorMeleeAttack()
-	{
-		_audio.PlayOneShot(attackSound);
-		cooldown = true;
-		player.GetComponent<FPSController>().SendMessage("TakeDamage", damage);
-	}
+	//public void OnAnimatorMeleeAttack()
+	//{
+	//	_audio.PlayOneShot(attackSound);
+	//	cooldown = true;
+	//	player.GetComponent<FPSController>().SendMessage("TakeDamage", damage);
+	//}
 }
